@@ -90,7 +90,7 @@ module.exports = options => {
       },
       {
         test: /\.txt$/,
-        loader: "file-loader?name=/public/data/[name].[ext]"
+        loader: "file-loader?name=[name].[ext]"
       }
     );
 

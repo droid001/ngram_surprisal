@@ -10,7 +10,8 @@ import "../styles/index.scss";
 // import file from "/data/martin_surprisal.txt";
 // console.log("file : ", file);
 (function() {
-  let FILE_URL = "/data/martin_surprisal.txt";
+
+  let FILE_URL = "http://localhost:1337/martin_surprisal.txt";
 
   // tsvLoader(FILE_URL)
   //   .then((data) => {
@@ -19,7 +20,7 @@ import "../styles/index.scss";
   //   .catch((err) => {
   //     console.warn(err);
   //   });
-
+// https://stackoverflow.com/questions/7431268/how-to-read-data-from-csv-file-using-javascript#12289296
   fetch(FILE_URL).then(
     function(res) {
       // res instanceof Response == true.
@@ -38,4 +39,6 @@ import "../styles/index.scss";
       console.log("Fetch failed!", e);
     }
   );
+
+
 })();

@@ -1,32 +1,31 @@
-'use strict';
+"use strict";
 
-const Path = require('path');
-const Webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const ExtractSASS = new ExtractTextPlugin('styles/bundle.[hash].css');
+const Path = require("path");
+const Webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractSASS = new ExtractTextPlugin("styles/bundle.[hash].css");
 
-module.exports = (options) => {
-  const dest = Path.join(__dirname, 'dist');
+module.exports = options => {
+  const dest = Path.join(__dirname, "dist");
 
   let webpackConfig = {
     devtool: options.devtool,
-    entry: [
-      './src/scripts/index'
-    ],
+    entry: ["./src/scripts/index"],
     output: {
       path: dest,
-      filename: 'bundle.[hash].js',
-      // publicPath: 'data'
+      filename: "bundle.[hash].js"
     },
     plugins: [
       new Webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify(options.isProduction ? 'production' : 'development')
+        "process.env": {
+          NODE_ENV: JSON.stringify(
+            options.isProduction ? "production" : "development"
+          )
         }
       }),
       new HtmlWebpackPlugin({
-        template: './src/index.html',
+        template: "./src/index.html",
         minify: options.isProduction && {
           collapseWhitespace: true,
           conservativeCollapse: true,
@@ -38,25 +37,27 @@ module.exports = (options) => {
       })
     ],
     module: {
-      rules: [{
-        test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['env']
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /(node_modules|bower_components)/,
+          use: {
+            loader: "babel-loader",
+            options: {
+              presets: ["env"]
+            }
           }
         }
-      }]
+      ]
     },
-    target: 'web',
+    target: "web",
     node: {
-      fs: 'empty'
+      fs: "empty"
     }
-    };
+  };
 
   if (options.isProduction) {
-    webpackConfig.entry = ['./src/scripts/index'];
+    webpackConfig.entry = ["./src/scripts/index"];
 
     webpackConfig.plugins.push(
       new Webpack.optimize.UglifyJsPlugin({
@@ -69,22 +70,29 @@ module.exports = (options) => {
 
     webpackConfig.module.rules.push({
       test: /\.s?css/i,
-      use: ExtractSASS.extract(['css-loader?sourceMap=true&minimize=true', 'sass-loader'])
+      use: ExtractSASS.extract([
+        "css-loader?sourceMap=true&minimize=true",
+        "sass-loader"
+      ])
     });
-
   } else {
-    webpackConfig.plugins.push(
-      new Webpack.HotModuleReplacementPlugin()
-    );
+    webpackConfig.plugins.push(new Webpack.HotModuleReplacementPlugin());
 
-    webpackConfig.module.rules.push({
-      test: /\.s?css$/i,
-      use: ['style-loader', 'css-loader?sourceMap=true', 'sass-loader']
-    }, {
-      test: /\.js$/,
-      use: 'eslint-loader',
-      exclude: /node_modules/
-    });
+    webpackConfig.module.rules.push(
+      {
+        test: /\.s?css$/i,
+        use: ["style-loader", "css-loader?sourceMap=true", "sass-loader"]
+      },
+      {
+        test: /\.js$/,
+        use: "eslint-loader",
+        exclude: /node_modules/
+      },
+      {
+        test: /\.txt$/,
+        loader: "file-loader?name=/public/data/[name].[ext]"
+      }
+    );
 
     webpackConfig.devServer = {
       contentBase: dest,
@@ -95,5 +103,4 @@ module.exports = (options) => {
   }
 
   return webpackConfig;
-
 };

@@ -57,6 +57,7 @@
   "dependencies": {
     "babel-polyfill": "^6.9.0",
     "babel-preset-env": "^1.6.1",
+    "file-loader": "^1.1.6",
     "tsv-loader": "^1.0.5"
   }
 }

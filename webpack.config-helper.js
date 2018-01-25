@@ -1,13 +1,13 @@
 "use strict";
 
-const Path = require("path");
+const path = require("path");
 const Webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const ExtractSASS = new ExtractTextPlugin("styles/bundle.[hash].css");
 
 module.exports = options => {
-  const dest = Path.join(__dirname, "dist");
+  const dest = path.join(__dirname, "dist");
 
   let webpackConfig = {
     devtool: options.devtool,
@@ -90,7 +90,7 @@ module.exports = options => {
       },
       {
         test: /\.txt$/,
-        loader: "file-loader?name=[name].[ext]"
+        use: "raw-loader"
       }
     );
 

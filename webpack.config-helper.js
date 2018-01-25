@@ -47,6 +47,19 @@ module.exports = options => {
               presets: ["env"]
             }
           }
+        },
+        // Makes enable loading of txt files
+        // {
+        //   test: /\.txt$/,
+        //   use: "raw-loader"
+        // }
+        {
+          test: /\.(csv|tsv)$/,
+          use: ["csv-loader"],
+          options: {
+            header: true,
+            skipEmptyLines: true
+          }
         }
       ]
     },
@@ -87,10 +100,6 @@ module.exports = options => {
         test: /\.js$/,
         use: "eslint-loader",
         exclude: /node_modules/
-      },
-      {
-        test: /\.txt$/,
-        use: "raw-loader"
       }
     );
 

@@ -1,4 +1,4 @@
-# n-gram Writer
+# N-gram Surprisal
 
 A simple JavaScript n-gram visualiser
 

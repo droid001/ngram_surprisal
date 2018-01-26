@@ -53,12 +53,14 @@ module.exports = options => {
         //   test: /\.txt$/,
         //   use: "raw-loader"
         // }
+        // Include reading of csv/tsv files in build
         {
           test: /\.(csv|tsv)$/,
-          use: ["csv-loader"],
-          options: {
-            header: true,
-            skipEmptyLines: true
+          use: {
+            loader: "csv-loader",
+            options: {
+              skipEmptyLines: true
+            }
           }
         }
       ]
